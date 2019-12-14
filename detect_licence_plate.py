@@ -31,8 +31,8 @@ with open(classesFile, 'rt') as f:
 
 # Give the configuration and weight files for the model and load the network using them.
 
-modelConfiguration = "licence_plate.cfg";
-modelWeights = "locence_plate_5000.weights";
+modelConfiguration = "custom_cfg/licence_plate.cfg";
+modelWeights = "models/licence_plate_5000.weights";
 
 
 net = cv.dnn.readNetFromDarknet(modelConfiguration, modelWeights)
