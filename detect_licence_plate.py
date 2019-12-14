@@ -23,7 +23,7 @@ parser.add_argument('--video', help='Path to video file.')
 args = parser.parse_args()
 
 # Load names of classes
-classesFile = "coco_classes.names";
+classesFile = "custom_cfg/licence_plate.names";
 
 classes = None
 with open(classesFile, 'rt') as f:
@@ -32,7 +32,7 @@ with open(classesFile, 'rt') as f:
 # Give the configuration and weight files for the model and load the network using them.
 
 modelConfiguration = "custom_cfg/licence_plate.cfg";
-modelWeights = "models/licence_plate_5000.weights";
+modelWeights = "weights/licence_plate.weights";
 
 
 net = cv.dnn.readNetFromDarknet(modelConfiguration, modelWeights)
@@ -124,7 +124,14 @@ def postprocess(frame, outs):
 # cv.namedWindow(winName, cv.WINDOW_NORMAL)
 
 outputFile = "yolo_out_py.avi"
-if (args.video):
+if (args.image):
+    # Open the image file
+    if not os.path.isfile(args.image):
+        print("Input image file ", args.image, " doesn't exist")
+        sys.exit(1)
+    cap = cv.VideoCapture(args.image)
+    outputFile = args.image[:-4]+'_yolo_out_py.jpg'
+elif (args.video):
     # Open the video file
     if not os.path.isfile(args.video):
         print("Input video file ", args.video, " doesn't exist")
@@ -169,3 +176,6 @@ while cv.waitKey(1) < 0:
 
     # final_frame = cv.resize(frame, (600, 600))                    # Resize image 
     cv.imshow('licence plate detection', frame)
+
+    if (args.image):
+        cv.imwrite(outputFile, frame.astype(np.uint8));
