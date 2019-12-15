@@ -1,4 +1,3 @@
-# This code is written at BigVision LLC. It is based on the OpenCV project. It is subject to the license terms in the LICENSE file found in this distribution and at http://opencv.org/license.html
 
 # Usage example:  python3 object_detection_yolo.py --video=run.mp4
 #                 python3 object_detection_yolo.py --image=bird.jpg
