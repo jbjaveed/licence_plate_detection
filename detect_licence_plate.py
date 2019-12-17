@@ -141,8 +141,14 @@ else:
     # Webcam input
     cap = cv.VideoCapture(0)
 
-frame_width =  int(cap.get(cv.CAP_PROP_FRAME_WIDTH))   # float
-frame_height = int(cap.get(cv.CAP_PROP_FRAME_HEIGHT))  # float
+
+# Get the video writer initialized to save the output video
+if (not args.image):
+    vid_writer = cv.VideoWriter(outputFile, cv.VideoWriter_fourcc('M','J','P','G'), 30, (round(cap.get(cv.CAP_PROP_FRAME_WIDTH)),round(cap.get(cv.CAP_PROP_FRAME_HEIGHT))))
+
+
+# frame_width =  int(cap.get(cv.CAP_PROP_FRAME_WIDTH))   # float
+# frame_height = int(cap.get(cv.CAP_PROP_FRAME_HEIGHT))  # float
     
 while cv.waitKey(1) < 0:
 
@@ -178,3 +184,5 @@ while cv.waitKey(1) < 0:
 
     if (args.image):
         cv.imwrite(outputFile, frame.astype(np.uint8));
+    else:
+        vid_writer.write(frame.astype(np.uint8))
